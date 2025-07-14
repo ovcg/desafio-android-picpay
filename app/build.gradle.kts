@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
 
@@ -55,6 +56,8 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.room)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.picasso)
     implementation(libs.circleImageView)

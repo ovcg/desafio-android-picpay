@@ -3,10 +3,13 @@ package com.picpay.desafio.android.di
 import com.picpay.desafio.android.data.PicPayService
 import com.picpay.desafio.android.data.UserRepository
 import com.picpay.desafio.android.data.UserRepositoryImpl
+import com.picpay.desafio.android.data.common.di.DatabaseModule
 import com.picpay.desafio.android.data.source.local.UserLocalDataSource
 import com.picpay.desafio.android.data.source.local.UserLocalDataSourceImpl
 import com.picpay.desafio.android.data.source.network.UserRemoteDataSource
 import com.picpay.desafio.android.data.source.network.UserRemoteDataSourceImpl
+import com.picpay.desafio.android.util.NetworkHelper
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -16,11 +19,12 @@ object DataModules {
 
     private const val BASE_URL = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
 
-    val dataModules = module {
+    val module = module {
         retrofit()
         dataSourceModule()
         repository()
-    }
+        utils()
+    } + DatabaseModule.module
 
     private fun Module.retrofit() {
         single {
@@ -35,7 +39,7 @@ object DataModules {
     }
 
     private fun Module.dataSourceModule() {
-        single<UserLocalDataSource> { UserLocalDataSourceImpl() }
+        single<UserLocalDataSource> { UserLocalDataSourceImpl(userDao = get()) }
         single<UserRemoteDataSource> { UserRemoteDataSourceImpl(service = get()) }
     }
 
@@ -44,8 +48,12 @@ object DataModules {
             UserRepositoryImpl(
                 localDataSource = get(),
                 remoteDataSource = get(),
-                isNetworkAvailable = get()
+                networkHelper = get()
             )
         }
+    }
+
+    private fun Module.utils() {
+        factory { NetworkHelper(context = androidContext()) }
     }
 }
