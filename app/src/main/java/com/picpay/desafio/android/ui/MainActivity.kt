@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.PicPayService
+import com.picpay.desafio.android.data.PicPayService
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         progressBar.visibility = View.VISIBLE
         service.getUsers()
-            .enqueue(object : Callback<List<User>> {
+            /*.enqueue(object : Callback<List<User>> {
                 override fun onFailure(call: Call<List<User>>, t: Throwable) {
                     val message = getString(R.string.error)
 
@@ -72,6 +72,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
                     adapter.users = response.body()!!
                 }
-            })
+            })*/
     }
 }
