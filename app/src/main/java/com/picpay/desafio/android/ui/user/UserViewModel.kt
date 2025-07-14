@@ -7,8 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.data.UserRepository
 import com.picpay.desafio.android.ui.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class UserViewModel(
