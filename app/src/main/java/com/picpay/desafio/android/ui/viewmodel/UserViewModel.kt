@@ -17,6 +17,10 @@ class UserViewModel(
     private val _userState = MutableStateFlow<UserState>(UserState.Loading)
     val userState: LiveData<UserState> = _userState.asLiveData()
 
+    init {
+        getUsers()
+    }
+
     fun getUsers() {
         viewModelScope.launch {
             val result = repository.getUsers()

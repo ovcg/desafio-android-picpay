@@ -1,18 +1,19 @@
 package com.picpay.desafio.android.ui
 
 import android.os.Bundle
-import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.ui.model.UserState
+import com.picpay.desafio.android.ui.theme.UserAppTheme
 import com.picpay.desafio.android.ui.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : ComponentActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -21,11 +22,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpViews()
-        observer()
+        // setUpViews()
+        // observer()
+        setContent {
+            val state by viewModel.userState.observeAsState()
+            UserAppTheme { UserScreen(userState = state) {} }
+        }
     }
 
-    override fun onResume() {
+    private fun showErrorMessage() {
+        val message = getString(R.string.error)
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    /*override fun onResume() {
         super.onResume()
         viewModel.getUsers()
     }
@@ -69,5 +79,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         } else {
             View.GONE
         }
-    }
+    }*/
 }
