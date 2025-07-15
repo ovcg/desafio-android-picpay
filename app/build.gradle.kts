@@ -21,6 +21,13 @@ android {
         vectorDrawables { useSupportLibrary = true }
     }
 
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            isIncludeAndroidResources = true
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -36,13 +43,6 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     buildFeatures { compose = true }
-
-    testOptions {
-        unitTests.apply {
-            isReturnDefaultValues = true
-            isIncludeAndroidResources = true
-        }
-    }
 }
 
 dependencies {
@@ -59,15 +59,15 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.room)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.ui.test.junit4.android)
     ksp(libs.androidx.room.compiler)
 
-    implementation(libs.picasso)
-    implementation(libs.circleImageView)
-
     testImplementation(libs.bundles.testing)
+    testImplementation(libs.robolectric)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.okhttp.mockserver)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-//    androidTestImplementation(libs.bundles.compose.testing)
+    androidTestImplementation(libs.bundles.compose.testing)
+    debugImplementation(libs.bundles.compose.testing)
 }

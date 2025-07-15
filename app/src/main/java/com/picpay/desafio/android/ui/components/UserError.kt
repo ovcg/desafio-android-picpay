@@ -15,12 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.ui.theme.PrimaryDark
+
+const val ERROR_TEST_TAG = "error_test"
+const val BTN_ERROR_TEST_TAG = "btn_error_test"
 
 @Preview
 @Composable
@@ -30,7 +34,7 @@ fun UserError(
     onReload: () -> Unit = {},
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().background(PrimaryDark),
+        modifier = Modifier.fillMaxSize().background(PrimaryDark).testTag(ERROR_TEST_TAG),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -45,7 +49,9 @@ fun UserError(
             DefaultSpacer()
             Text(text = stringResource(message), color = White)
             DefaultSpacer()
-            Button(onClick = { onReload() }) { Text(text = stringResource(R.string.btn_error)) }
+            Button(modifier = Modifier.testTag(BTN_ERROR_TEST_TAG), onClick = { onReload() }) {
+                Text(text = stringResource(R.string.btn_error))
+            }
         }
     }
 }
