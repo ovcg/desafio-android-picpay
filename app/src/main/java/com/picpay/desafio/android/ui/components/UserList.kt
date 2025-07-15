@@ -1,14 +1,10 @@
 package com.picpay.desafio.android.ui.components
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.ui.model.User
 import com.picpay.desafio.android.ui.theme.UserAppTheme
@@ -23,7 +19,6 @@ fun LazyListScope.UserList(users: List<User>, onReload: () -> Unit) {
             )
         }
     } else {
-        item { Spacer(modifier = Modifier.height(24.dp)) }
         items(users, { user -> user.id }) { user -> UserItem(user) }
     }
 }
