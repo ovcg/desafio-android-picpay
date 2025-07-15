@@ -15,14 +15,19 @@ class UserRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : UserRepository {
 
-    override suspend fun getUsers(): List<User> {
+    override suspend fun getUsers(): Result<List<User>> {
         return withContext(ioDispatcher) {
-            if (networkHelper.isConnected()) {
-                val users = remoteDataSource.getUsers()
-                localDataSource.saveUsers(users)
-                users
-            } else {
-                localDataSource.getUsers()
+            try {
+                if (networkHelper.isConnected()) {
+                    val users = remoteDataSource.getUsers()
+                    localDataSource.saveUsers(users)
+                    Result.success(users)
+                } else {
+                    val localUsers = localDataSource.getUsers()
+                    Result.success(localUsers)
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
             }
         }
     }
