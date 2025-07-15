@@ -1,9 +1,9 @@
-package com.picpay.desafio.android.data.common.db
+package com.picpay.desafio.android.data.common.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.picpay.desafio.android.data.common.dao.UserDao
-import com.picpay.desafio.android.data.common.db.AppDatabase.Companion.VERSION
+import com.picpay.desafio.android.data.common.database.AppDatabase.Companion.VERSION
 import com.picpay.desafio.android.data.common.entity.UserEntity
 
 @Database(entities = [UserEntity::class], version = VERSION, exportSchema = true)

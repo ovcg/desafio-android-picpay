@@ -1,6 +1,5 @@
-package com.picpay.desafio.android.data
+package com.picpay.desafio.android.data.repository
 
-import android.util.Log
 import com.picpay.desafio.android.data.source.local.UserLocalDataSource
 import com.picpay.desafio.android.data.source.network.UserRemoteDataSource
 import com.picpay.desafio.android.ui.model.User
@@ -13,18 +12,16 @@ class UserRepositoryImpl(
     private val remoteDataSource: UserRemoteDataSource,
     private val localDataSource: UserLocalDataSource,
     private val networkHelper: NetworkHelper,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : UserRepository {
 
     override suspend fun getUsers(): List<User> {
         return withContext(ioDispatcher) {
             if (networkHelper.isConnected()) {
-                Log.d("Network", "fetch from network")
                 val users = remoteDataSource.getUsers()
                 localDataSource.saveUsers(users)
                 users
             } else {
-                Log.d("Local", "fetch from local")
                 localDataSource.getUsers()
             }
         }
