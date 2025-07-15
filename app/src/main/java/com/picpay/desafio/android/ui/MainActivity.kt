@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         observer()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUsers()
+    }
+
     private fun setUpViews() {
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.user_list_progress_bar)

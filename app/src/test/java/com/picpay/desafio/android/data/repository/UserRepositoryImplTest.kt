@@ -10,6 +10,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
 import kotlin.test.Test
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -38,7 +39,8 @@ class UserRepositoryImplTest {
 
             val users = repository.getUsers()
 
-            assertTrue { users.isNotEmpty() }
+            assertTrue { users.isSuccess }
+            assertTrue { users.getOrNull()!!.isNotEmpty() }
         }
 
     @Test
@@ -50,6 +52,18 @@ class UserRepositoryImplTest {
 
             val users = repository.getUsers()
 
-            assertTrue { users.isNotEmpty() }
+            assertTrue { users.isSuccess }
+            assertTrue { users.getOrNull()!!.isNotEmpty() }
         }
+
+    @Test
+    fun `when getUsers fails returns error`() = runTest {
+        coEvery { localDataSource.getUsers() } throws Exception("error")
+        every { networkHelper.isConnected() } returns false
+
+        val users = repository.getUsers()
+
+        assertTrue { users.isFailure }
+        assertNotNull(users.exceptionOrNull())
+    }
 }
