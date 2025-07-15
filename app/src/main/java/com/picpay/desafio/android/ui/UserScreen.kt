@@ -2,13 +2,12 @@ package com.picpay.desafio.android.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,32 +29,40 @@ import com.picpay.desafio.android.ui.theme.UserAppTheme
 
 @Composable
 fun UserScreen(userState: UserState?, onReload: () -> Unit = {}) {
-    Column(modifier = Modifier.fillMaxSize().background(PrimaryDark)) {
-        Text(
-            modifier = Modifier.fillMaxWidth().padding(start = 24.dp, top = 48.dp),
-            text = stringResource(R.string.title),
-            style = Typography.titleLarge,
-            color = Color.White,
-        )
+    val lazyListState = rememberLazyListState()
+    LazyColumn(state = lazyListState, modifier = Modifier.fillMaxSize().background(PrimaryDark)) {
+        item {
+            Text(
+                modifier = Modifier.fillMaxWidth().padding(start = 24.dp, top = 48.dp),
+                text = stringResource(R.string.title),
+                style = Typography.titleLarge,
+                color = Color.White,
+            )
+        }
 
         when (userState) {
             is UserState.Loading -> {
-                Box(modifier = Modifier.wrapContentSize().align(Alignment.CenterHorizontally)) {
-                    CircularProgressIndicator(
-                        color = Accent,
-                        modifier =
-                            Modifier.wrapContentSize().padding(8.dp).align(Alignment.TopCenter),
-                    )
+                item {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Box(modifier = Modifier.wrapContentSize().align(Alignment.Center)) {
+                            CircularProgressIndicator(
+                                color = Accent,
+                                modifier =
+                                    Modifier.wrapContentSize()
+                                        .padding(8.dp)
+                                        .align(Alignment.TopCenter),
+                            )
+                        }
+                    }
                 }
             }
 
             is UserState.Success -> {
-                Spacer(modifier = Modifier.height(24.dp))
                 UserList(userState.users, onReload)
             }
 
             else -> {
-                UserError(onReload = onReload)
+                item { UserError(onReload = onReload) }
             }
         }
     }
@@ -80,9 +87,5 @@ fun UserScreenPreview() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun UserScreenEmptyPreview() {
-    UserAppTheme {
-        UserScreen(
-            UserState.Success(emptyList())
-        )
-    }
+    UserAppTheme { UserScreen(UserState.Success(emptyList())) }
 }

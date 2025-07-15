@@ -27,7 +27,8 @@ class UserViewModel(
             when {
                 result.isSuccess -> {
                     _userState.update {
-                        UserState.Success(result.getOrNull()?: emptyList())
+                        val users = result.getOrNull()
+                        UserState.Success(users?: emptyList())
                     }
                 }
                 else -> {

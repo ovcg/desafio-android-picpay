@@ -1,28 +1,30 @@
 package com.picpay.desafio.android.ui.components
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.ui.model.User
 import com.picpay.desafio.android.ui.theme.UserAppTheme
 
-@Composable
-fun UserList(users: List<User>, onReload: () -> Unit) {
+fun LazyListScope.UserList(users: List<User>, onReload: () -> Unit) {
     if (users.isEmpty()) {
-        UserError(
-            message = R.string.empty_list,
-            icon = R.drawable.ic_round_account_circle,
-            onReload,
-        )
-    } else {
-
-        val listState = rememberLazyListState()
-        LazyColumn(state = listState) {
-            items(users, { user -> user.id }) { user -> UserItem(user) }
+        item {
+            UserError(
+                message = R.string.empty_list,
+                icon = R.drawable.ic_round_account_circle,
+                onReload,
+            )
         }
+    } else {
+        item { Spacer(modifier = Modifier.height(24.dp)) }
+        items(users, { user -> user.id }) { user -> UserItem(user) }
     }
 }
 
@@ -30,28 +32,30 @@ fun UserList(users: List<User>, onReload: () -> Unit) {
 @Composable
 private fun UserListPreview() {
     UserAppTheme {
-        UserList(
-            listOf(
-                User(
-                    username = "username",
-                    img = "https://randomuser.me/api/portraits/men/9.jpg",
-                    name = "Eduardo Santos",
-                    id = 1,
+        LazyColumn {
+            UserList(
+                listOf(
+                    User(
+                        username = "username",
+                        img = "https://randomuser.me/api/portraits/men/9.jpg",
+                        name = "Eduardo Santos",
+                        id = 1,
+                    ),
+                    User(
+                        username = "username",
+                        img = "https://randomuser.me/api/portraits/men/9.jpg",
+                        name = "Eduardo Santos",
+                        id = 2,
+                    ),
                 ),
-                User(
-                    username = "username",
-                    img = "https://randomuser.me/api/portraits/men/9.jpg",
-                    name = "Eduardo Santos",
-                    id = 2,
-                ),
-            ),
-            onReload = {},
-        )
+                onReload = {},
+            )
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun EmptyListPreview() {
-    UserAppTheme { UserList(emptyList(), {}) }
+    UserAppTheme { LazyColumn { UserList(emptyList(), {}) } }
 }
