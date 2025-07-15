@@ -13,14 +13,11 @@ data class User(
     @SerializedName("username") val username: String?
 ) : Parcelable
 
-
-fun List<User>.toEntity(): List<UserEntity> {
-    return map {
-        UserEntity(
-            img = it.img,
-            name = it.name,
-            id = it.id.toLong(),
-            username = it.username
-        )
-    }
+fun User.toEntity(): UserEntity {
+    return UserEntity(
+        img = img,
+        name = name,
+        id = id.toLong(),
+        username = username
+    )
 }

@@ -12,6 +12,6 @@ class UserLocalDataSourceImpl(val userDao: UserDao) : UserLocalDataSource {
     }
 
     override suspend fun saveUsers(users: List<User>) {
-        userDao.deleteAndInsertTransaction(users.toEntity())
+        userDao.deleteAndInsertTransaction(users.map { it.toEntity() })
     }
 }

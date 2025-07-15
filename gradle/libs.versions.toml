@@ -1,11 +1,10 @@
 [versions]
-activityCompose = "1.10.1"
 agp = "8.11.1"
 appcompat = "1.7.1"
 circleImageView = "3.1.0"
 coil = "2.7.0"
-composeBom = "2025.06.01"
 coreKtx = "1.16.0"
+coroutines = "1.10.2"
 espressoCore = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -14,6 +13,7 @@ kotlin = "2.1.20"
 ksp = "2.1.20-1.0.32"
 lifecycleRuntimeKtx = "2.9.1"
 material = "1.12.0"
+mockk = "1.14.4"
 okhttp = "5.1.0"
 picasso = "2.71828"
 retrofit = "3.0.0"
@@ -27,48 +27,28 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "test-core" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "test-runner" }
 
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-
 circleImageView = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleImageView" }
-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+kotlin-test-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+mockk = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-mockserver = { group = "com.squareup.okhttp3", name = "mockwebserver3", version.ref = "okhttp" }
 picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 
 [bundles]
-compose = [
-    "androidx-activity-compose",
-    "androidx-material3",
-    "androidx-ui",
-    "androidx-ui-graphics",
-    "androidx-ui-tooling",
-    "androidx-ui-tooling-preview"
-]
-compose-testing = [
-    "androidx-ui-test-manifest",
-    "androidx-ui-test-junit4",
-]
 koin = [
     "koin-android",
     "koin-core"
@@ -82,9 +62,11 @@ room = [
     "androidx-room-ktx"
 ]
 testing = [
-    "junit",
     "androidx-test-core",
     "androidx-test-runner",
+    "kotlin-test-coroutines",
+    "junit",
+    "mockk"
 ]
 
 [plugins]
@@ -92,6 +74,5 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
