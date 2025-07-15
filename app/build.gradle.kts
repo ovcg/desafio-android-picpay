@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
 
@@ -31,30 +32,31 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.bundles.koin)
-    implementation(libs.androidx.appcompat)
+    implementation(libs.coil)
     implementation(libs.material)
-    implementation(libs.bundles.retrofit)
     implementation(libs.okhttp)
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.room)
+    ksp(libs.androidx.room.compiler)
+
     implementation(libs.picasso)
     implementation(libs.circleImageView)
 
-    testImplementation(libs.junit)
-    testImplementation(libs.androidx.test.runner)
-    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.okhttp.mockserver)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
 }
