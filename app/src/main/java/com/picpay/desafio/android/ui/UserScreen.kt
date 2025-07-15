@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.ui.components.UserError
 import com.picpay.desafio.android.ui.components.UserList
 import com.picpay.desafio.android.ui.model.User
 import com.picpay.desafio.android.ui.model.UserState
@@ -28,7 +29,7 @@ import com.picpay.desafio.android.ui.theme.Typography
 import com.picpay.desafio.android.ui.theme.UserAppTheme
 
 @Composable
-fun UserScreen(userState: UserState?, onError: () -> Unit = {}) {
+fun UserScreen(userState: UserState?, onReload: () -> Unit = {}) {
     Column(modifier = Modifier.fillMaxSize().background(PrimaryDark)) {
         Text(
             modifier = Modifier.fillMaxWidth().padding(start = 24.dp, top = 48.dp),
@@ -50,11 +51,11 @@ fun UserScreen(userState: UserState?, onError: () -> Unit = {}) {
 
             is UserState.Success -> {
                 Spacer(modifier = Modifier.height(24.dp))
-                UserList(userState.users)
+                UserList(userState.users, onReload)
             }
 
             else -> {
-                onError()
+                UserError(onReload = onReload)
             }
         }
     }
@@ -72,6 +73,16 @@ fun UserScreenPreview() {
     UserAppTheme {
         UserScreen(
             UserState.Success(listOf(User(id = 1, img = "", name = "nome", username = "username")))
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun UserScreenEmptyPreview() {
+    UserAppTheme {
+        UserScreen(
+            UserState.Success(emptyList())
         )
     }
 }

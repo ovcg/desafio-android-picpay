@@ -62,7 +62,7 @@ fun UserItem(user: User) {
                         .testTag(USER_ITEM_NAME_TEST_TAG),
                 text = user.name,
                 color = Color.White,
-                style = Typography.labelSmall,
+                style = Typography.labelMedium,
             )
             Text(
                 modifier =
@@ -70,7 +70,7 @@ fun UserItem(user: User) {
                         .testTag(USER_ITEM_USERNAME_TEST_TAG),
                 text = user.username ?: "",
                 color = ColorDetail,
-                style = Typography.labelSmall,
+                style = Typography.labelMedium,
             )
         }
     }
