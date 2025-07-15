@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,24 +17,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.picpay.desafio.android.R
+import coil3.ImageLoader
+import coil3.compose.AsyncImage
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.request.ImageRequest
+import coil3.request.ImageResult
 import com.picpay.desafio.android.ui.model.User
 import com.picpay.desafio.android.ui.theme.Accent
 import com.picpay.desafio.android.ui.theme.ColorDetail
 import com.picpay.desafio.android.ui.theme.PrimaryDark
 import com.picpay.desafio.android.ui.theme.Typography
 import com.picpay.desafio.android.ui.theme.UserAppTheme
+import okhttp3.OkHttpClient
 
 @Composable
 fun UserItem(user: User) {
@@ -63,22 +68,24 @@ fun UserItem(user: User) {
 @Composable
 private fun LoadImage(image: String?) {
     Box(modifier = Modifier.size(76.dp), contentAlignment = Alignment.Center) {
-        var isLoading by remember { mutableStateOf(true) }
-        if (isLoading) {
-            CircularProgressIndicator(color = Accent, modifier = Modifier.padding(all = 8.dp))
-        }
+        var isLoaded by rememberSaveable { mutableStateOf(true) }
+        val imageReq = ImageRequest.Builder(LocalContext.current)
+            .data(image)
+            .build()
         AsyncImage(
-            modifier =
-                Modifier.size(52.dp)
-                    .clip(CircleShape)
-                    .padding(top = 12.dp, bottom = 12.dp, start = 24.dp),
-            model = image,
-            onSuccess = { isLoading = false },
-            onError = { isLoading = false },
+            model = imageReq,
+            modifier = Modifier.size(52.dp).clip(CircleShape),
+            onError = {
+                Log.e("COIL ERORR =", it.result.throwable.message ?: "err" )
+                isLoaded = false
+                      },
+            onSuccess = { isLoaded = false },
             contentDescription = null,
-            placeholder = painterResource(R.drawable.ic_round_account_circle),
             contentScale = ContentScale.Crop,
         )
+        if (isLoaded) {
+            CircularProgressIndicator(color = Accent, modifier = Modifier.padding(all = 8.dp))
+        }
     }
 }
 
