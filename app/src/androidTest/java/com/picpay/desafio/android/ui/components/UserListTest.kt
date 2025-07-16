@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.components
+package com.picpay.desafio.android.ui.components
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.test.SemanticsMatcher
@@ -7,12 +7,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.picpay.desafio.android.UserMock
-import com.picpay.desafio.android.ui.components.BTN_ERROR_TEST_TAG
-import com.picpay.desafio.android.ui.components.ERROR_TEST_TAG
-import com.picpay.desafio.android.ui.components.USER_ITEM_TEST_TAG
-import com.picpay.desafio.android.ui.components.UserList
 import com.picpay.desafio.android.ui.theme.UserAppTheme
+import com.picpay.desafio.android.utils.mock.UserMock
 import org.junit.Rule
 import org.junit.Test
 
@@ -30,9 +26,7 @@ class UserListTest {
 
     @Test
     fun showUsersList() {
-        composeTestRule.setContent {
-            UserAppTheme { LazyColumn { UserList(listOf(UserMock.user)) {} } }
-        }
+        composeTestRule.setContent { UserAppTheme { LazyColumn { UserList(UserMock.users()) {} } } }
         composeTestRule
             .onAllNodes(SemanticsMatcher(USER_ITEM_TEST_TAG, { true }), useUnmergedTree = true)
             .onFirst()

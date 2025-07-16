@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -45,7 +46,7 @@ fun UserScreen(userState: UserState?, onReload: () -> Unit = {}) {
 
         when (userState) {
             is UserState.Loading -> {
-                item { Loading() }
+                 Loading()
             }
 
             is UserState.Success -> {
@@ -59,14 +60,15 @@ fun UserScreen(userState: UserState?, onReload: () -> Unit = {}) {
     }
 }
 
-@Composable
-private fun Loading() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier.wrapContentSize().align(Alignment.Center)) {
-            CircularProgressIndicator(
-                color = Accent,
-                modifier = Modifier.wrapContentSize().padding(8.dp).align(Alignment.TopCenter),
-            )
+private fun LazyListScope.Loading() {
+    item {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.wrapContentSize().align(Alignment.Center)) {
+                CircularProgressIndicator(
+                    color = Accent,
+                    modifier = Modifier.wrapContentSize().padding(8.dp).align(Alignment.TopCenter),
+                )
+            }
         }
     }
 }
