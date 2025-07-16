@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.picpay.desafio.android.UserMock
+import com.picpay.desafio.android.utils.mock.UserMock
 import com.picpay.desafio.android.ui.components.BTN_ERROR_TEST_TAG
 import com.picpay.desafio.android.ui.components.ERROR_TEST_TAG
 import com.picpay.desafio.android.ui.components.USER_ITEM_TEST_TAG

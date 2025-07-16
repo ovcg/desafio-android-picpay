@@ -63,7 +63,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.bundles.testing)
-    testImplementation(libs.robolectric)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.okhttp.mockserver)
     androidTestImplementation(libs.androidx.junit)

@@ -1,13 +1,9 @@
 package com.picpay.desafio.android.ui.viewmodel
 
-import android.app.Application
-import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.picpay.desafio.android.data.repository.UserRepository
 import com.picpay.desafio.android.ui.model.User
 import com.picpay.desafio.android.ui.model.UserState
-import com.picpay.desafio.android.ui.util.captureValues
-import com.picpay.desafio.android.ui.util.getValueForTest
 import io.mockk.coEvery
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
@@ -21,13 +17,8 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [Build.VERSION_CODES.S], application = Application::class)
 class UserViewModelTest {
 
     @get:Rule val mockKRule = MockKRule(this)
@@ -50,7 +41,7 @@ class UserViewModelTest {
     fun `when getUsers is called, then loading state is emitted`() {
         val expected = UserState.Loading
 
-        assertEquals(expected, viewModel.userState.getValueForTest())
+        assertEquals(expected, viewModel.userState.value)
     }
 
     @Test
@@ -60,7 +51,8 @@ class UserViewModelTest {
         coEvery { repository.getUsers() } returns result
 
         viewModel.getUsers()
-        viewModel.userState.captureValues { assertEquals(expected, values.last()) }
+        val actual = viewModel.userState.replayCache
+        assertEquals(expected, actual.last())
     }
 
     @Test
@@ -70,6 +62,7 @@ class UserViewModelTest {
         coEvery { repository.getUsers() } returns result
 
         viewModel.getUsers()
-        assertEquals(expected, viewModel.userState.getValueForTest())
+        val actual = viewModel.userState.value
+        assertEquals(expected, actual)
     }
 }

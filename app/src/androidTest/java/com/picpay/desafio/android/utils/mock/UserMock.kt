@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.utils.mock
 
 import com.picpay.desafio.android.ui.model.User
 
@@ -10,4 +10,6 @@ object UserMock {
         name = "Name",
         id = 1,
     )
+
+    fun users() = listOf(user, user.copy(id = 2))
 }
