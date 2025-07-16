@@ -67,7 +67,6 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.okhttp.mockserver)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.bundles.compose.testing)
     debugImplementation(libs.bundles.compose.testing)
 }

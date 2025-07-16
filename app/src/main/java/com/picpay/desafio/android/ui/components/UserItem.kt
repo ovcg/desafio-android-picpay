@@ -39,8 +39,8 @@ import com.picpay.desafio.android.ui.theme.Typography
 import com.picpay.desafio.android.ui.theme.UserAppTheme
 
 const val USER_ITEM_TEST_TAG = "USER_ITEM_TAG"
-const val USER_ITEM_NAME_TEST_TAG = "USER_ITEM_TAG"
-const val USER_ITEM_USERNAME_TEST_TAG = "USER_ITEM_TAG"
+const val USER_ITEM_NAME_TEST_TAG = "USER_ITEM_NAME_TEST_TAG"
+const val USER_ITEM_USERNAME_TEST_TAG = "USER_ITEM_USERNAME_TEST_TAG"
 
 @Composable
 fun UserItem(user: User) {

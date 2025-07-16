@@ -6,7 +6,6 @@ coil = "3.2.0"
 composeBom = "2025.06.01"
 coreKtx = "1.16.0"
 coroutines = "1.10.2"
-espressoCore = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 koin = "4.1.0"
@@ -28,7 +27,6 @@ uiTestJunit4Android = "1.8.3"
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
