@@ -8,7 +8,7 @@ import com.picpay.desafio.android.ui.model.User
 data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val username: String?,
-    val name: String,
+    val name: String?,
     val img: String?
 )
 

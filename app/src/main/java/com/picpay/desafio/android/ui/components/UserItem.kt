@@ -59,16 +59,16 @@ fun UserItem(user: User) {
                 modifier =
                     Modifier.padding(start = 16.dp, top = 24.dp)
                         .wrapContentSize()
-                        .testTag(USER_ITEM_NAME_TEST_TAG),
-                text = user.name,
+                        .testTag(USER_ITEM_USERNAME_TEST_TAG),
+                text = user.username ?: "",
                 color = Color.White,
                 style = Typography.labelMedium,
             )
             Text(
                 modifier =
                     Modifier.padding(start = 16.dp, bottom = 8.dp)
-                        .testTag(USER_ITEM_USERNAME_TEST_TAG),
-                text = user.username ?: "",
+                        .testTag(USER_ITEM_NAME_TEST_TAG),
+                text = user.name ?: "",
                 color = ColorDetail,
                 style = Typography.labelMedium,
             )
