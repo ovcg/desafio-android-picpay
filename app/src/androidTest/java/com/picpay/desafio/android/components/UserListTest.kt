@@ -31,7 +31,7 @@ class UserListTest {
     @Test
     fun showUsersList() {
         composeTestRule.setContent {
-            UserAppTheme { LazyColumn { UserList(listOf(UserMock.user)) {} } }
+            UserAppTheme { LazyColumn { UserList(UserMock.users()) {} } }
         }
         composeTestRule
             .onAllNodes(SemanticsMatcher(USER_ITEM_TEST_TAG, { true }), useUnmergedTree = true)
