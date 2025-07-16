@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
@@ -20,6 +21,13 @@ android {
         vectorDrawables { useSupportLibrary = true }
     }
 
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            isIncludeAndroidResources = true
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -34,31 +42,31 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    testOptions {
-        unitTests.apply {
-            isReturnDefaultValues = true
-            isIncludeAndroidResources = true
-        }
-    }
+    buildFeatures { compose = true }
 }
 
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.material)
     implementation(libs.okhttp)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.room)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.ui.test.junit4.android)
     ksp(libs.androidx.room.compiler)
 
-    implementation(libs.picasso)
-    implementation(libs.circleImageView)
-
     testImplementation(libs.bundles.testing)
+    testImplementation(libs.robolectric)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.okhttp.mockserver)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.bundles.compose.testing)
+    debugImplementation(libs.bundles.compose.testing)
 }

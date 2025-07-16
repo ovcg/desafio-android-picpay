@@ -17,13 +17,18 @@ class UserViewModel(
     private val _userState = MutableStateFlow<UserState>(UserState.Loading)
     val userState: LiveData<UserState> = _userState.asLiveData()
 
+    init {
+        getUsers()
+    }
+
     fun getUsers() {
         viewModelScope.launch {
             val result = repository.getUsers()
             when {
                 result.isSuccess -> {
                     _userState.update {
-                        UserState.Success(result.getOrNull()?: emptyList())
+                        val users = result.getOrNull()
+                        UserState.Success(users?: emptyList())
                     }
                 }
                 else -> {
